@@ -18,7 +18,7 @@ class Ordine:
     cliente: ClienteRecord
 
     def totale_netto(self):
-        return sum(r.totale_riga() for r in self.righe)
+        return sum(r.totale_riga() for r in self.righe)#sum(quello_che_voglio per ogni elemento che c'è in <-->)
 
     def totale_lordo(self, aliquota_iva):
         return self.totale_netto()*(1+aliquota_iva)
@@ -56,5 +56,5 @@ class OrdineConSconto(Ordine):
         self.totale_lordo()*(1-self.sconto_percentuale)
 
     def totale_netto(self):
-        netto_base = super().totale_netto()
+        netto_base = super().totale_netto() #attributo del padre
         return netto_base*(1-self.sconto_percentuale)

@@ -5,49 +5,53 @@ from gestionale.core.clienti import ClienteRecord
 from gestionale.core.prodotti import ProdottoRecord
 from gestionale.vendite.ordini import Ordine
 
-p1 = ProdottoRecord("Laptop", 1200.0)
-p2 = ProdottoRecord("Mouse", 20.0)
+p1 = ProdottoRecord("Laptop", 1200.0)     #ProdottRecord lo avevamo creatoo su core prodotti, e ora lo stiamo utiliz
+p2 = ProdottoRecord("Mouse", 20.0)      #zando per creare i prodotti
 p3 = ProdottoRecord("Auricolari", 250.0)
 
+#CREARE UNA LISTA
 carrello =[p1, p2, p3, ProdottoRecord("Tablet", 700.0)]
 
 print("Prodotti nel carrello:")
-for i, p in enumerate(carrello):
+for i, p in enumerate(carrello):        #enumerate, usa i per dire l'indice, p per il prodotto
     print(f"{i}) {p.name} - {p.prezzo_unitario}")
 
 #Aggiungere ad una lista
 carrello.append(ProdottoRecord("Monitor", 150.0))
 
-carrello.sort(key = lambda x: x.prezzo_unitario, reverse=True)
+carrello.sort(key = lambda x: x.prezzo_unitario, reverse=True) #ordina per prezzo_unitario (al contrario)
 
+#STAMPA IL CONTENUTO DEL CARRELLO
 print("Prodotti nel carrello:")
 for i, p in enumerate(carrello):
     print(f"{i}) {p.name} - {p.prezzo_unitario}")
 
+#CALCOLA LA SOMMA DEI PREZZI
 tot = sum(p.prezzo_unitario for p in carrello)
 print(f"Totale del carrello: {tot}")
 
 #Aggiungere
-carrello.append(ProdottoRecord("Propdo", 100.0))
-carrello.extend([ProdottoRecord("aaa", 100.0), ProdottoRecord("bbb", 100.0)])
-carrello.insert(2, ProdottoRecord("ccc", 100.0))
+carrello.append(ProdottoRecord("Propdo", 100.0)) #unisce un elemento
+carrello.extend([ProdottoRecord("aaa", 100.0), ProdottoRecord("bbb", 100.0)]) #extend è un append, ma unisce una lista anzichè un elemento
+carrello.insert(2, ProdottoRecord("ccc", 100.0)) #insert, prende l'indice, e l'elemento da aggiungere
 
 #Rimuovere
 carrello.pop() # rimuove l'ultimo elemento
 carrello.pop(2) # rimuove l'elemento in posizione 2
-carrello.remove(p1) #elimino la prima occorrenza di p1
+carrello.remove(p1) #elimino la prima occorrenza di p1 (non so dov'è ma so come si chiama)
 # carrello.clear() #svuoto la lista
 
 #Sorting
 # carrello.sort() #ordina seguendo ordinamento naturale -- questo non funziona se gli oggetti contenuti non definisco un metodo __lt__
 # carrello.sort(reverse=True) #ordina al contrario
-# carrello.sort(key = function)
-# carrello_ordinato = sorted(carrello)
+# carrello.sort(key = function) #ordina in base alla key
+#dopo uno di questi metodi la lista originale si modifica, per questo si utilizzano delle copie.
+# carrello_ordinato = sorted(carrello) #carrello_ordinato è una copia ORDINATA di carrello
 
 #Copie ed altro
-carrello.reverse() # inverte l'ordine
-carrello_copia = carrello.copy() # shallow copy
-carrello_copia2 = copy.deepcopy(carrello) # deep copy, ovvero copio anche il contenuto
+carrello.reverse() # inverte l'ordine, ordina dall'ultimo al primo
+carrello_copia = carrello.copy() # carrello_copia è una copia identica di carrello (contiene però sempre gli stessi oggetti, non buono se ne devo eliminare alcuni)
+carrello_copia2 = copy.deepcopy(carrello) # deep copy, ovvero copio anche il contenuto (gli elementi possono essere diversi)
 
 # TUPLE
 sede_principale = (45, 8) #lat e long della sede di torino
@@ -55,6 +59,7 @@ sede_milano = (45, 9) #lat e long della sede di milano
 
 print(f"Sede principale lat: {sede_principale[0]}, long: {sede_principale[1]}")
 
+#TUPLA DI TUPLE (non si può aggiungere o togliere nulla, solo modificare)
 AliquoteIVA = (
     ("Standard", 0.22),
     ("Ridotta", 0.10),
@@ -248,6 +253,7 @@ print(categorie_counter.total())
 vendite_gennaio = Counter(
     {"Laptop": 13, "Tablet": 15}
 )
+
 
 vendite_febbraio = Counter(
     {"Laptop": 3, "Stampante": 1}
