@@ -81,7 +81,7 @@ tot, media, max, min = calcola_statistiche_carrello(carrello)
 # tot, *altri_campi = calcola_statistiche_carrello(carrello)
 print(tot)
 
-#SET
+#SET/ insiemi (possono essere solo elementi distinti, non esistono duplicati)
 categorie = {"Gold", "Silver", "Bronze", "Gold"}
 print(categorie)
 print(len(categorie))
@@ -132,7 +132,7 @@ s1.issuperset(s) # se gli elementi di s sono contenuti in s1
 s1.isdisjoint(s) # se gli elementi di s e quelli di s1 sono diversi
 
 #Dictionary
-catalogo = {
+catalogo = { #funziona scrivendo -> chiave : valore
     "LAP001": ProdottoRecord("Laptop", 1200),
     "LAP002": ProdottoRecord("Laptop Pro", 2300.0),
     "MAU001": ProdottoRecord("Mouse", 20.0),
@@ -146,16 +146,22 @@ print(f"Il prodotto con codice {cod} è {prod}")
 
 # print(f"Cerco un altro oggetto: {catalogo["NonEsiste"]}")
 
+#se chiamo: nome_dizionario[nome_chiave], ma la chiave non è dentro il dizionario, phython si blocca
+# e da un errore in rosso, per evitarlo si usa il get, che al massimo torna None (non interrompe nulla)
+#si usa così -> nome_dizionario.get("nome_chiave) ... ES:
 prod1 = catalogo.get("NonEsiste")
 
 if prod1 is None:
     print("Prodotto non trovato")
-
+# a volte serve salvare qualcos'altro, e non serve None, in questi casi, dopo la chiave si scrive un istruzione
+# nome_dizionario.get("nome_chiave", "voglioScrivereQuesto")
 prod2 = catalogo.get("NonEsiste2", ProdottoRecord("Sconosciuto", 0))
 
 print(prod2)
 
-#ciclare su un dizionario
+# in questo modo si ottengono un insieme di chiavi e una di valori, ( un insieme non troppo definito, so che non è una
+#lista ma una raccolta, e non si può modificare, ma si aggiorna)
+#con il list davanti ottengo una lista vera e propria (che però non è aggiornata)
 keys = list(catalogo.keys())
 values = list(catalogo.values())
 
@@ -164,7 +170,7 @@ for k in keys:
 
 for v in values:
     print(v)
-
+#dizionario.items() restituisce le coppie (chiave , valore)
 for key, val in catalogo.items():
     print(f"Cod {key} è associata a: {val}")
 
@@ -198,7 +204,7 @@ o2 = Ordine([], ClienteRecord("Mario Bianchi", "bianchi@polito.it", "Silver"))
 o3 = Ordine([], ClienteRecord("Fulvio Rossi", "fulvio@polito.it", "Bronze"))
 o4 = Ordine([], ClienteRecord("Carlo Masone", "carlo@polito.it", "Gold"))
 
-ordini_da_processare.append((o1, 0))
+ordini_da_processare.append((o1, 0)) #tupla (ordine-tempoDiArrivo)
 ordini_da_processare.append((o2, 10))
 ordini_da_processare.append((o3, 3))
 ordini_da_processare.append((o4, 45))
@@ -225,7 +231,8 @@ categorie_periodo.add("Bronze")
 
 print("=============================================================")
 
-#COUNTER
+#COUNTER è una struttura dati (comodo per processing statistico, quante volte è capitato un valore, o quante volte compare)
+#lista di clienti(per esempio che hanno fatto un ordine in questo mese)
 lista_clienti = [
     ClienteRecord("Mario Rossi", "mario@polito.it", "Gold"),
     ClienteRecord("Mario Bianchi", "bianchi@polito.it", "Silver"),
@@ -238,17 +245,19 @@ lista_clienti = [
     ClienteRecord("Fulvio Corno", "carlo@polito.it", "Silver")
 ]
 
-categorie = [c.categoria for c in lista_clienti]
-categorie_counter = Counter(categorie)
+categorie = [element.categoria for element in lista_clienti]
+categorie_counter = Counter(categorie) #Counter è un oggetto (bisogna importare il pacchetto)passa la lista "categorie"
 
-print("Distribuzione categorie clienti")
+print("Distribuzione categorie clienti")#-----
 print(categorie_counter)
 
-print("2 Categorie più frequent1")
+print("2 Categorie più frequent1")#--------
 print(categorie_counter.most_common(2))
 
-print("totale:")
+print("totale:")#somma di quante volte sono state chiamate le categorie
 print(categorie_counter.total())
+
+
 
 vendite_gennaio = Counter(
     {"Laptop": 13, "Tablet": 15}
@@ -259,7 +268,7 @@ vendite_febbraio = Counter(
     {"Laptop": 3, "Stampante": 1}
 )
 
-vendite_bimestre = vendite_gennaio+vendite_febbraio
+vendite_bimestre = vendite_gennaio+vendite_febbraio #somma i counter delle chiavi
 
 #Aggregare informazione
 print(f"Vendite Gennaio: {vendite_gennaio}")
@@ -272,12 +281,13 @@ print(f"Differenza di vendite: {vendite_gennaio-vendite_febbraio}")
 
 #modificare i valore in the fly
 
-vendite_gennaio["Laptop"] += 4
+vendite_gennaio["Laptop"] += 4 #aggiungo 4 vendite a gennaio, e si aggiorna vendite_gennaio
+
 print(f"Vendite Gennaio: {vendite_gennaio}")
 
 # metodi da ricordare
-c.most_common(n) #restituisce gli n elementi più frequenti
-c.total() # somma dei conteggi
+#c.most_common(n) #restituisce gli n elementi più frequenti
+#c.total() # somma dei conteggi
 
 #Defaultdicts
 

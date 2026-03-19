@@ -105,6 +105,8 @@ class ProdottoRecord:
     name: str
     prezzo_unitario: float
 
+    #quando devo usare un'istanza come chiave in un dizionario (no lista??) l'istanza deve essere hashable
+    #cioè dotata di una funzione hash
     def __hash__(self):
         return hash((self.name, self.prezzo_unitario))
 
