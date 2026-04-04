@@ -16,10 +16,10 @@ from gestionale.vendite.ordini import Ordine, RigaOrdine
 class GestoreOrdini:
 
     def __init__(self):
-        self._ordini_da_processare = deque()
+        self._ordini_da_processare = deque() #sono con l' underscore per riferire all'utilizzatore di non toccarli
         self._ordini_processati = []
         self._statistiche_prodotti = Counter()
-        self._ordini_per_categoria = defaultdict(list)
+        self._ordini_per_categoria = defaultdict(list) #per non gestire il caso in cui non è stato creata la categoria
 
     def add_ordine(self, ordine: Ordine):
         """Aggiunge un nuovo ordine agli elementi da gestire"""
@@ -51,10 +51,11 @@ class GestoreOrdini:
         #Aggiornare statistiche sui prodotti venduti --
         # Laptop - 10 +1
         # Mouse - 5 +2
-        for riga in ordine.righe:
-            self._statistiche_prodotti[riga.prodotto.name] += riga.quantita
+        for riga in ordine.righe: #in ordine.righe avevamo un ordine per ogni riga
+            self._statistiche_prodotti[riga.prodotto.name] += riga.quantita #aggiungo la quantità in modo da poter usare
+            #i counter
 
-        #Raggruppare gli ordini per categoria
+        #Raggruppare gli ordini per categoria( es. i gold hanno fatto questo ordine->)
         self._ordini_per_categoria[ordine.cliente.categoria].append(ordine)
 
         #Archiviamo l'ordine
@@ -64,7 +65,7 @@ class GestoreOrdini:
 
         return True
 
-    def processa_tutti_ordini(self):
+    def processa_tutti_ordini(self): #processa tutti gli ordini in coda
         """Processa tutti gli ordini attualmente presenti in coda."""
         print("\n" + "="*60)
         print(f"Processando {len(self._ordini_da_processare)} ordini")
@@ -72,7 +73,9 @@ class GestoreOrdini:
             self.processa_prossimo_ordine()
         print("Tutti gli ordini sono stati processati.")
 
-    def get_statistiche_prodotti(self, top_n: int = 5):
+    def get_statistiche_prodotti(self, top_n: int = 5): #se il metodo da qualcosa lo chiamiamo get,
+        #se invece serve per aggiungere lo chiamiamo add, il nome deve essere il più esplicativo possibile
+        #inoltre,se il metodo da get, non devo stamparlo, ma delegare qualche altra funzione per stamparlo
         "Questo metodo restituisce info sui prodotti più venduti. "
         valori = []
         for prodotto, quantità in self._statistiche_prodotti.most_common(top_n):
