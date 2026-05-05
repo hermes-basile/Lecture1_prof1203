@@ -9,6 +9,7 @@ class View:
         self._page.title = "TdP 2025 - Software Gestionale" #titolo
         self._page.horizontal_alignment = "CENTER" #dice di centrare tutto ciò che è visibile
         self._page.theme_mode = ft.ThemeMode.LIGHT #modifica il tema da scuro a chiaro
+        self._txtInNomeP = None
         self.update_page() # "salva" le modifiche del titolo,tema, e centro
 
     def carica_interfaccia(self): #dove creiamo le cose visualizzate nella pagina
