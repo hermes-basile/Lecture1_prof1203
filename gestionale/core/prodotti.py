@@ -52,7 +52,6 @@ class Prodotto:
         return f"Prodotto(name = {self.name}, price = {self.price}, quantity = {self.quantity}, supplier = {self.supplier})"
 
     def __eq__(self, other: object): #confronta un'oggetto (self) con un altro (other:tipo_oggetto)
-
         if not isinstance(other, Prodotto): #se other non appartiene alla classe Prodotto
             return NotImplemented
         return (self.name == other.name
